@@ -1,15 +1,8 @@
 #!/usr/bin/env python2.7
 
-import sys
-import os
-import getopt
-import socket
-import logging
+import sys, os, getopt, socket, logging
 from stat import *
-import stat
-import signal
-import mimetypes
-import binascii
+import stat, signal, mimetypes, binascii
 
 
 # Constants
@@ -216,9 +209,11 @@ class HTTPHandler(BaseHandler):
     # HTTP error + picture
     def _handle_error(self,errno):
         self._header()
-        self.stream.write('<h1>{} Error</h1><hr>\n'.format(errno))
-        #self.stream.write('<img src={} alt={}>\n'.format('https://45.media.tumblr.com/e5910eaee11a02177721735e115c12c8/tumblr_o5sntx2FFq1sr8ofxo4_250.gif','404 Error'))
-
+        self.stream.write('<h1>{} Error!</h1><hr>\n'.format(errno))
+        if errno == 404:
+            self.stream.write('<img src={} alt={}>\n'.format('http://static.splashnology.com/articles/404_Pages_feb_2012/main.jpg','404 Error!'))
+        else: #assume 403 error
+            self.stream.write('<img src={} alt={}>\n'.format('http://scratiphone.com/wp-content/uploads/2012/11/error403.jpg', '403 Error!'))
     def _header(self):
         self.stream.write('HTTP/1.0 200 OK\r\n')
         self.stream.write('Content-Type: text/html\r\n')
