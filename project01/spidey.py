@@ -9,9 +9,9 @@ import stat, signal, mimetypes, binascii
 
 PROGRAM  = os.path.basename(sys.argv[0])
 LOGLEVEL = logging.INFO
-ADDRESS  = '0.0.0.0'
+ADDRESS  = 'localhost'
 DOCROOT  = '.'
-PORT     = 9234
+PORT     = 9231
 FORKING  = False
 
 # Utility Functions

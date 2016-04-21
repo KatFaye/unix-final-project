@@ -1,0 +1,54 @@
+\documentclass[letterpaper]{article}
+
+\title{Project 01: Networking}
+\date{4/20/2016}
+\author{Kat Herring \\ kherring@nd.edu}
+
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+
+\begin{document}
+
+\maketitle
+
+This document provides a summary of Project 1 and related experiments on throughput and latency.
+
+\section{Summary}
+
+The biggest challenge with this project was understanding how sockets worked; the majority of the time I spent working on this was on Thor.py simply due to the initial time spent trying to understand the server/client relationship and converting that to usable code. All required functionalities work.
+
+I wanted to have more time to make the server look nice with CSS, but the test scripts took much longer than anticipated to get working despite their relative simplicity, so I didn't implement that.
+
+\section{Latency}
+
+I measured latency by running Thor.py with 10 requests and 4 processes several times in a loop, then storing that output into a file. That file was then used to calculate the average latency for each file format and data option; This data was all summarized in two files, results.dat and resultsF.dat, as displayed in Figure \ref{fig:latency}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=5in]{latency.png}
+\caption{Histogram of Latency}
+\label{fig:latency}
+\end{figure}
+
+The data suggests that in general, single connection is much faster than forking for CGI and directories, while forking is faster for static files.
+
+\section{Throughput}
+
+Throughput was calculated in a similar manner to latency, except the resulting times outputted with Thor.py and awk were divided into the file size. As shown in Figure \ref{fig:tput}, there is no statistically significant difference in throughput between a single connection and forking.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=5in]{throughput.png}
+\caption{Histogram of Throughput}
+\label{fig:tput}
+\end{figure}
+
+\section{Analysis}
+
+The results of my experiments suggest that while forking allows for processes to be run simultaneously, it provides no clear advantage in terms of throughput and significantly increases latency with some file types.
+
+\section{Conclusions}
+
+Overall, I developed a better understand of the client/server relationship with this project, as well as some insight into the relationship between latency and running processes.
+\end{document}

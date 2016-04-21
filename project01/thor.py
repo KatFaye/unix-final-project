@@ -2,11 +2,11 @@
 #thor.py
 #Author: Kat Herring
 
-import getopt, logging, os, time, socket, sys
+import getopt, logging, os, time, socket, sys, numpy
 
 # Constants
 ADDRESS  = '127.0.0.1'
-PORT     = 80
+PORT     = 9231
 URL      = 'localhost'
 PROGRAM  = os.path.basename(sys.argv[0])
 LOGLEVEL = logging.INFO
@@ -57,7 +57,7 @@ class TCPClient(object):
         # port
         if ':' in self.url:
             self.port = self.url.split(':',1)[1]
-            self.port = self.port.split('/',1)[0]
+            self.port = int(self.port.split('/',1)[0])
         
         self.logger.debug('Parsed Port: {}'.format(self.port))
        
@@ -185,8 +185,10 @@ if __name__ == '__main__':
                 except KeyboardInterrupt:
                     sys.exit(0)
                 end_time = time.time()
-                times.append(end_time-start_time)
-                logging.info('Elapsed time: {:0.2f}'.format(end_time - start_time))     
+                times.append(float(end_time-start_time))
+                logging.info('Elapsed time: {:0.4}'.format(end_time - start_time))     
+            logging.info('Average time: {:0.4}'.format(numpy.mean(times)))
+            sys.exit(0)
     for child in children:
         try: 
             pid, status = os.waitpid(child, 0)
