@@ -2,6 +2,8 @@
 
 import sys
 import work_queue
+import json
+import os
 
 # Constants
 ALPHABET = string.ascii_lowercase + string.digits
