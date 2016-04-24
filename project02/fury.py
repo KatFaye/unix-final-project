@@ -5,9 +5,6 @@ import work_queue
 
 # Constants
 
-SOURCES  = ('hulk.py', HASHES)
-PORT     = 9241
-
 # Main Execution
 
 if __name__ == '__main__':
