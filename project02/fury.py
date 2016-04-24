@@ -4,6 +4,7 @@ import sys
 import work_queue
 
 # Constants
+ALPHABET = string.ascii_lowercase + string.digits
 
 # Main Execution
 
@@ -23,7 +24,10 @@ if __name__ == '__main__':
     queue.specify_log('fury-kherring.log') # Specify Work Queue log location
 
     for i in range(6):
-        command = './hulk.py -l {}'.format(i)
+        command = './hulk.py -l "{}"'.format(i)
+    for i in range(6): #last five
+        for j in itertools.product(ALPHABET, repeat = j): #first 1-3 prefix
+            command = './hulk.py -l "{}" -p "{}"'.format(i, j)
         
 
         # Example check
