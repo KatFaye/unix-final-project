@@ -4,6 +4,8 @@ import sys
 import work_queue
 import json
 import os
+import string
+import itertools
 
 # Constants
 ALPHABET = string.ascii_lowercase + string.digits
@@ -27,29 +29,28 @@ if __name__ == '__main__':
 
     for i in range(6):
         command = './hulk.py -l "{}"'.format(i)
-    for i in range(6): #last five
-        for j in itertools.product(ALPHABET, repeat = j): #first 1-3 prefix
-            command = './hulk.py -l "{}" -p "{}"'.format(i, j)
-        
+    for j in range(4):
+	for element in itertools.product(ALPHABET, repeat = j): #first 1-3 prefix
+        	command = './hulk.py -l 5 -p "{}"'.format(element)
+    			    
+		 # Example check
+        	if command in JOURNAL:
+      			print >>sys.stderr, 'Already did', command
+        	else:
+            		task    = work_queue.Task(command)
 
-        # Example check
-        if command in JOURNAL:
-            print >>sys.stderr, 'Already did', command
-        else:
-            task    = work_queue.Task(command)
+        	for source in ('hulk.py', 'hashes.txt'):
+          		task.specify_file(source, source, work_queue.WORK_QUEUE_INPUT)
 
-        for source in ('hulk.py', 'hashes.txt'):
-            task.specify_file(source, source, work_queue.WORK_QUEUE_INPUT)
-
-        queue.submit(task)
+      		queue.submit(task)
 
     while not queue.empty():
         task = queue.wait()
        
         if task and task.return_status == 0:
-            JOURNAL[task.command] = task.output.split()
-            with open('journal.json.new', 'w') as stream:
-                json.dump(JOURNAL, stream)
-            os.rename('journal.json.new', 'journal-kherring.json')
+           JOURNAL[task.command] = task.output.split()
+           with open('journal.json.new', 'w') as stream:
+           	json.dump(JOURNAL, stream)
+           os.rename('journal.json.new', 'journal-kherring.json')
         # Example recording
 
