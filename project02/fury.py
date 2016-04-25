@@ -30,17 +30,20 @@ if __name__ == '__main__':
     for i in range(6):
         command = './hulk.py -l "{}"'.format(i)
     for j in range(4):
-	      for element in itertools.product(ALPHABET, repeat = j): #first 1-3 prefix
+        prefix = [''.join(i) for i in itertools.product(ALPHABET, repeat = j)]
+    
+        for element in prefix: #first 1-3 prefix
+          #need to join tuple
         	command = './hulk.py -l 5 -p "{}"'.format(element)
     			    
 		 # Example check
         	if command in JOURNAL:
       			print >>sys.stderr, 'Already did', command
         	else:
-            		task    = work_queue.Task(command)
+            task    = work_queue.Task(command)
 
         	for source in ('hulk.py', 'hashes.txt'):
-          		task.specify_file(source, source, work_queue.WORK_QUEUE_INPUT)
+          	task.specify_file(source, source, work_queue.WORK_QUEUE_INPUT)
 
       		queue.submit(task)
 
