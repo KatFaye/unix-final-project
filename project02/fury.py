@@ -30,7 +30,7 @@ if __name__ == '__main__':
     for i in range(6):
         command = './hulk.py -l "{}"'.format(i)
     for j in range(4):
-	for element in itertools.product(ALPHABET, repeat = j): #first 1-3 prefix
+	      for element in itertools.product(ALPHABET, repeat = j): #first 1-3 prefix
         	command = './hulk.py -l 5 -p "{}"'.format(element)
     			    
 		 # Example check
